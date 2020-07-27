@@ -19,7 +19,7 @@ export default class APIServices {
         const res = await fetch(`${this._apiSoundBase}${birdhName}`);
 
         if (!res.ok) {
-            throw new Error(`Could not fetch ${birdhName} photo :(` +
+            throw new Error(`Could not fetch ${birdhName} song :(` +
                 `, received ${res.status}`)
         }
         return await res.json();
