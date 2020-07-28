@@ -6,10 +6,11 @@ import ItemList from '../item-list/item-list';
 import BirdDetails from '../bird-details/bird-details';
 
 import './app.css';
+import NextBtn from "../next-btn";
 
 const App = () => {
     return (
-        <div>
+        <div className="container">
             <Header />
             <CurrentBird />
 
@@ -21,6 +22,7 @@ const App = () => {
                     <BirdDetails />
                 </div>
             </div>
+            <NextBtn />
         </div>
     );
 };
