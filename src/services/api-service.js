@@ -7,7 +7,6 @@ export default class APIServices {
 
 
     async getBirdPhoto(birdName) {
-        console.log(birdName)
         const res = await fetch(`${this._apiPhotoBase}${birdName}`);
 
         if (!res.ok) {
@@ -28,10 +27,7 @@ export default class APIServices {
             if (done) {
                 break;
             }
-            console.log(value)
             let result = new TextDecoder("utf-8").decode(value);
-            console.log(JSON.parse(result))
-            console.log(`Получено ${value.length} байт`)
             return JSON.parse(result)
         }
     };

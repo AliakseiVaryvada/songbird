@@ -20,41 +20,75 @@ export default class App extends Component {
     // services = new Services()
     state = {
         secretBird : this.getRandomBird(),
-        random: true
+        random: true,
+        enableNextButton: false,
+        score : 0,
+        clearArrayFlag : false
+
     }
 
     getRandomBird(){
-
         return [Math.floor(Math.random() * Math.floor(6)),
                 Math.floor(Math.random() * Math.floor(6))]
 
     }
-    //
-    // componentDidMount() {
-    //     this.getRandomBird()
-    // }
+
+
+    enableNextQuestion = (name) => {
+        if (this.state.enableNextButton === false) {
+            this.setState((state) => {
+                return {
+                    score: state.score + 1,
+                    enableNextButton: true
+                }
+            })
+        }
+    }
+
+    openNextQuestion = () => {
+        if (this.state.enableNextButton === true) {
+            this.setState((state) => {
+                return {
+                    enableNextButton: false,
+                    secretBird : this.getRandomBird(),
+                    clearArrayFlag: true
+                }
+            })
+        }
+    }
+    clearArrayFlagOff = () => {
+        this.setState({clearArrayFlag : false})
+    }
+
 
     render() {
 
         console.log(this.state.secretBird)
-        console.log(BirdData[this.state.secretBird[0]][this.state.secretBird[1]])
+        const renderBird = BirdData[this.state.secretBird[0]][this.state.secretBird[1]]
 
         return (
             <div className="container">
-                <Header/>
-                <CurrentBird secretBird = {BirdData[this.state.secretBird[0]][this.state.secretBird[1]]}/>
+                <Header score = {this.state.score}/>
+                <CurrentBird secretBird = {renderBird}/>
 
                 <div className="row mb2">
                     <div className="col-md-6">
                         <ItemList
-                            secretBird = {BirdData[this.state.secretBird[0]][this.state.secretBird[1]]}
-                            birdList = {BirdData[this.state.secretBird[0]]}/>
+                            secretBird = {renderBird}
+                            birdList = {BirdData[this.state.secretBird[0]]}
+                            enableNextQuestion = {this.enableNextQuestion}
+                            clearArrayFlag = {this.state.clearArrayFlag}
+                            clearArrayFlagOff = {this.clearArrayFlagOff}
+                        />
                     </div>
                     <div className="col-md-6">
                         <BirdDetails/>
                     </div>
                 </div>
-                <NextBtn/>
+                <NextBtn
+                    enableNextButton = {this.state.enableNextButton}
+                    openNextQuestion = {this.openNextQuestion}
+                />
             </div>
         );
     }

@@ -9,10 +9,10 @@ import Services from "../../services/api-service";
 export default class NextBtn extends Component {
 
     render() {
-        return (
 
+        return (
             <div>
-            {/*<button  onClick={() => console.log(testee.getBirdPhoto('Corvus corax'))}>photo</button>*/}
+            <button disabled={!this.props.enableNextButton} onClick={this.props.openNextQuestion}>Next Q</button>
             </div>
     )}
 }

@@ -21,6 +21,14 @@ export default class CurrentBird extends Component {
         this.birdPhoto(props.secretBird.species)
         this.state.name = props.secretBird.name
     }
+    componentDidUpdate(prevProps, prevState, snapshot){
+        console.warn(this.props.secretBird)
+        if(this.props.secretBird.name !== prevState.name) {
+            console.log('CONSTRUCTOR : ' + this.props.secretBird.name)
+            this.birdPhoto(this.props.secretBird.species)
+            this.state.name = this.props.secretBird.name
+        }
+    }
 
     birdPhoto(name) {
         console.log(name)
