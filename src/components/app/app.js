@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import Header from '../header/header';
 import CurrentBird from '../current-bird/current-bird';
@@ -19,17 +19,27 @@ import NextBtn from "../next-btn";
 export default class App extends Component {
     // services = new Services()
     state = {
-        secretBird : this.getRandomBird(),
+        secretBird: this.getRandomBird(),
         random: true,
         enableNextButton: false,
-        score : 0,
-        clearArrayFlag : false
+        score: 0,
+        clearArrayFlag: false
 
     }
 
-    getRandomBird(){
-        return [Math.floor(Math.random() * Math.floor(6)),
-                Math.floor(Math.random() * Math.floor(6))]
+    getRandomBird() {
+        const question = [Math.floor(Math.random() * Math.floor(6)),
+            Math.floor(Math.random() * Math.floor(6))]
+
+        if (this.state) {
+            if (question[0] === this.state.secretBird[0] && question[1] === this.state.secretBird[1]) {
+                this.getRandomBird()
+            } else {
+                return question
+            }
+        } else {
+            return question
+        }
 
     }
 
@@ -50,14 +60,14 @@ export default class App extends Component {
             this.setState((state) => {
                 return {
                     enableNextButton: false,
-                    secretBird : this.getRandomBird(),
+                    secretBird: this.getRandomBird(),
                     clearArrayFlag: true
                 }
             })
         }
     }
     clearArrayFlagOff = () => {
-        this.setState({clearArrayFlag : false})
+        this.setState({clearArrayFlag: false})
     }
 
 
@@ -68,17 +78,17 @@ export default class App extends Component {
 
         return (
             <div className="container">
-                <Header score = {this.state.score}/>
-                <CurrentBird secretBird = {renderBird}/>
+                <Header score={this.state.score}/>
+                <CurrentBird secretBird={renderBird}/>
 
                 <div className="row mb2">
                     <div className="col-md-6">
                         <ItemList
-                            secretBird = {renderBird}
-                            birdList = {BirdData[this.state.secretBird[0]]}
-                            enableNextQuestion = {this.enableNextQuestion}
-                            clearArrayFlag = {this.state.clearArrayFlag}
-                            clearArrayFlagOff = {this.clearArrayFlagOff}
+                            secretBird={renderBird}
+                            birdList={BirdData[this.state.secretBird[0]]}
+                            enableNextQuestion={this.enableNextQuestion}
+                            clearArrayFlag={this.state.clearArrayFlag}
+                            clearArrayFlagOff={this.clearArrayFlagOff}
                         />
                     </div>
                     <div className="col-md-6">
@@ -86,8 +96,8 @@ export default class App extends Component {
                     </div>
                 </div>
                 <NextBtn
-                    enableNextButton = {this.state.enableNextButton}
-                    openNextQuestion = {this.openNextQuestion}
+                    enableNextButton={this.state.enableNextButton}
+                    openNextQuestion={this.openNextQuestion}
                 />
             </div>
         );
