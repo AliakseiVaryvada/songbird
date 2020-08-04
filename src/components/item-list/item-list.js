@@ -16,7 +16,7 @@ export default class ItemList extends Component {
         //  console.log(event.target.id)
         //  console.log(this.props.secretBird.id)
         const id = parseInt(event.target.id);
-
+        this.props.setSelectedBirdId(id)
         if (id === this.props.secretBird.id) {
             console.log('WIN!')
             this.setState(function (state) {
@@ -24,7 +24,9 @@ export default class ItemList extends Component {
                 arrayIds.push(id)
                 return ({winFlag: true, mixFlag: false, clickedIds: arrayIds})
             })
-            this.props.enableNextQuestion('win');
+            let scoreCounter  = 5 - document.getElementsByClassName('error').length
+            console.log('scoreCounter : ' + scoreCounter)
+            this.props.enableNextQuestion(scoreCounter);
 
         } else {
             console.log('LOSE!')
@@ -69,7 +71,7 @@ export default class ItemList extends Component {
         }
 
         return (
-            <div className="col-md-6">
+            <div className="col-md-6 card">
                 <ul className="item-list list-group">
                     {renderList}
                 </ul>

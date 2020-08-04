@@ -19,36 +19,47 @@ import NextBtn from "../next-btn";
 export default class App extends Component {
     // services = new Services()
     state = {
-        secretBird: this.getRandomBird(),
+        secretBird: this.getBird(),
         random: true,
         enableNextButton: false,
         score: 0,
-        clearArrayFlag: false
+        clearArrayFlag: false,
+        selectedBirdId : null
 
     }
 
-    getRandomBird() {
-        const question = [Math.floor(Math.random() * Math.floor(6)),
-            Math.floor(Math.random() * Math.floor(6))]
+    // getRandomBird() {
+    //     const question = [Math.floor(Math.random() * Math.floor(6)),
+    //         Math.floor(Math.random() * Math.floor(6))]
+    //
+    //     if (this.state) {
+    //         if (question[0] === this.state.secretBird[0] && question[1] === this.state.secretBird[1]) {
+    //             this.getRandomBird()
+    //         } else {
+    //             return question
+    //         }
+    //     } else {
+    //         return question
+    //     }
+    //
+    // }
+
+    getBird() {
 
         if (this.state) {
-            if (question[0] === this.state.secretBird[0] && question[1] === this.state.secretBird[1]) {
-                this.getRandomBird()
-            } else {
-                return question
-            }
+            return [this.state.secretBird[0] + 1,
+                Math.floor(Math.random() * Math.floor(6))]
         } else {
-            return question
+            return [0, Math.floor(Math.random() * Math.floor(6))]
         }
-
     }
 
 
-    enableNextQuestion = (name) => {
+    enableNextQuestion = (score) => {
         if (this.state.enableNextButton === false) {
             this.setState((state) => {
                 return {
-                    score: state.score + 1,
+                    score: state.score + score,
                     enableNextButton: true
                 }
             })
@@ -60,16 +71,23 @@ export default class App extends Component {
             this.setState((state) => {
                 return {
                     enableNextButton: false,
-                    secretBird: this.getRandomBird(),
+                    secretBird: this.getBird(),
                     clearArrayFlag: true
                 }
             })
         }
     }
+
+
+
     clearArrayFlagOff = () => {
         this.setState({clearArrayFlag: false})
     }
 
+    setSelectedBirdId = (id) => {
+        console.log('SET ID')
+        this.setState({selectedBirdId: id})
+    }
 
     render() {
 
@@ -89,10 +107,14 @@ export default class App extends Component {
                             enableNextQuestion={this.enableNextQuestion}
                             clearArrayFlag={this.state.clearArrayFlag}
                             clearArrayFlagOff={this.clearArrayFlagOff}
+                            setSelectedBirdId = {this.setSelectedBirdId}
                         />
                     </div>
                     <div className="col-md-6">
-                        <BirdDetails/>
+                        <BirdDetails
+                            birdList={BirdData[this.state.secretBird[0]]}
+                            selectedBirdId = {this.state.selectedBirdId}
+                        />
                     </div>
                 </div>
                 <NextBtn

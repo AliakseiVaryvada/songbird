@@ -16,10 +16,23 @@ export default class CurrentBird extends Component {
         audio: null
     }
 
+    getPhotoWithRightHeight = (response) => {
+
+        let photoDetails =  response.photos.photo[Math.floor(Math.random() * Math.floor(9))];
+        console.log(photoDetails.height_m)
+        if (photoDetails.height_m < 360) {
+            console.log(photoDetails.url_m)
+            return photoDetails.url_m
+        } else {
+            return this.getPhotoWithRightHeight(response)
+        }
+    }
+
     constructor(props) {
         super();
         this.birdPhoto(props.secretBird.species)
         this.state.name = props.secretBird.name
+
     }
     componentDidUpdate(prevProps, prevState, snapshot){
         console.warn(this.props.secretBird)
@@ -30,16 +43,21 @@ export default class CurrentBird extends Component {
         }
     }
 
+
     birdPhoto(name) {
         console.log(name)
         this.services
             .getPhoto(name)
             .then((response) => (
-                this.setState({photo: response.photos.photo[Math.floor(Math.random() * Math.floor(3))].url_m}))
+                this.setState({
+                    photo: this.getPhotoWithRightHeight(response)
+                }))
             )
     }
 
     render() {
+
+
         console.log(this.props)
 
         const {photo, name, audio} = this.state

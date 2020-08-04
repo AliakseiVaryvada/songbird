@@ -1,3 +1,61 @@
 .bird-description{
 
 }
+.bird-details{
+    padding: 1rem;
+    border: 1px solid #444;
+    width: 100%;
+}
+.bird-details-img{
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.bird-details-img-hide{
+    display: none;
+}
+.rhap_time {
+    color: #D3D3D3!important;
+}
+.rhap_additional-controls {
+    display: none!important;
+}
+/*.rhap_volume-container{*/
+    /*display: none!important;*/
+/*}*/
+.rhap_progress-bar{
+    border: none;
+}
+.player-titles{
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+.rhap_container{
+    box-shadow: none!important;
+    border: none!important;
+}
+.latin-title{
+    margin-bottom: 0px;
+}
+.first-title{
+    padding: 0px;
+}
+.rhap_container{
+    padding: 0px!important;
+}
+.list-group-item{
+    padding: 10px 0 10px 5px;
+}
+.rhap_progress-indicator{
+    background: #00bc8c!important;
+}
+.rhap_main-controls-button{
+    color: #00bc8c!important;
+}
+.rhap_button-clear{
+    color: #00bc8c!important;
+}
+.rhap_volume-indicator{
+    background: #00bc8c!important;
+}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './item.css';
-export default class SearchPanel extends Component{
+export default class Item extends Component{
         // state = {
         //     selected : false
         // }
