@@ -36,13 +36,14 @@ export default class APIServices {
         }
     };
 
-    async getBirdSong(birdhName) {
-        const res = await fetch(`${this._apiSoundBase}${birdhName}+q_lt:A+len:15-30+since:2020-01-01`);
-
+    async getBirdSong(birdName) {
+        const res = await fetch(`${this._apiSoundBase}${encodeURIComponent(birdName)}+q_lt:A+len:15-30+since:2020-01-01`);
+        console.log(`${this._apiSoundBase}${birdName}`)
         if (!res.ok) {
-            throw new Error(`Could not fetch ${birdhName} song :(` +
+            throw new Error(`Could not fetch ${birdName} song :(` +
                 `, received ${res.status}`)
         }
+
         return await res.json();
     }
 

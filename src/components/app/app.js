@@ -20,11 +20,12 @@ export default class App extends Component {
     // services = new Services()
     state = {
         secretBird: this.getBird(),
+        categoryNumber: 0,
         random: true,
         enableNextButton: false,
         score: 0,
         clearArrayFlag: false,
-        selectedBirdId : null
+        selectedBirdId: null
 
     }
 
@@ -45,8 +46,10 @@ export default class App extends Component {
     // }
 
     getBird() {
-
         if (this.state) {
+            this.setState((state) => {
+                return {categoryNumber: state.categoryNumber + 1}
+            })
             return [this.state.secretBird[0] + 1,
                 Math.floor(Math.random() * Math.floor(6))]
         } else {
@@ -78,8 +81,6 @@ export default class App extends Component {
         }
     }
 
-
-
     clearArrayFlagOff = () => {
         this.setState({clearArrayFlag: false})
     }
@@ -96,10 +97,16 @@ export default class App extends Component {
 
         return (
             <div className="container">
-                <Header score={this.state.score}/>
-                <CurrentBird secretBird={renderBird}/>
+                <Header
+                    score={this.state.score}
+                    currentId={this.state.categoryNumber}
+                />
+                <CurrentBird
+                    secretBird={renderBird}
+                    winFlag={this.state.enableNextButton}
+                />
 
-                <div className="row mb2">
+                <div className="row mb2 pt-3">
                     <div className="col-md-6">
                         <ItemList
                             secretBird={renderBird}
@@ -107,13 +114,13 @@ export default class App extends Component {
                             enableNextQuestion={this.enableNextQuestion}
                             clearArrayFlag={this.state.clearArrayFlag}
                             clearArrayFlagOff={this.clearArrayFlagOff}
-                            setSelectedBirdId = {this.setSelectedBirdId}
+                            setSelectedBirdId={this.setSelectedBirdId}
                         />
                     </div>
                     <div className="col-md-6">
                         <BirdDetails
                             birdList={BirdData[this.state.secretBird[0]]}
-                            selectedBirdId = {this.state.selectedBirdId}
+                            selectedBirdId={this.state.selectedBirdId}
                         />
                     </div>
                 </div>

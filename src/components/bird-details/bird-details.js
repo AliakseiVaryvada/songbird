@@ -53,10 +53,15 @@ export default class BirdDetails extends Component {
             .getBirdSong(name)
             .then((response) => {
                 console.log(response)
-                this.setState({
-                    song: 'https:' + response.recordings[
-                        Math.floor(Math.random() * Math.floor(response.recordings.length - 1))].file
-                })
+                if (response.numRecordings === '0'){
+                    this.setState({
+                        song: this.props.birdList[this.props.selectedBirdId - 1].audio
+                    })
+                } else {
+                    this.setState({
+                        song: 'https:' + response.recordings[0].file
+                    })
+                }
             }).then(() =>
             this.setState({
                 displayLoader: 'none',
@@ -68,7 +73,7 @@ export default class BirdDetails extends Component {
 
     render() {
         const playerStyle = {
-            background: 'rgb(240 248 255 / 0%)',
+            background: 'transparent'
         };
 
         const {birdList, selectedBirdId} = this.props

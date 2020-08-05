@@ -29,7 +29,6 @@ export default class ItemList extends Component {
             this.props.enableNextQuestion(scoreCounter);
 
         } else {
-            console.log('LOSE!')
             if(this.state.winFlag === false && !this.state.clickedIds.includes(id)) {
                 this.setState(function (state) {
                     const arrayIds = state.clickedIds
@@ -71,7 +70,7 @@ export default class ItemList extends Component {
         }
 
         return (
-            <div className="col-md-6 card">
+            <div className="card birds-list">
                 <ul className="item-list list-group">
                     {renderList}
                 </ul>
