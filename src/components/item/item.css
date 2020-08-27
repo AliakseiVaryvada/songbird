@@ -12,6 +12,10 @@
     font-size: 18px;
 }
 
+.disabled-item-list {
+    cursor: wait!important;
+    background-color: #444!important;
+}
 .item-list .list-group-item:hover {
     background-color: #444;
 }

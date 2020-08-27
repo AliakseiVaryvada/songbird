@@ -4,12 +4,12 @@ export default class APIServices {
         Math.floor(Math.random() * Math.floor(5))
         }&per_page=50&format=json&nojsoncallback=1&tags=`;
     ////cors bypassing with proxy
-    _apiSoundBase = 'https://cors-anywhere.herokuapp.com/https://www.xeno-canto.org/api/2/recordings?query=';
+    _apiSoundBase = 'https://api.allorigins.win/get?url=https://www.xeno-canto.org/api/2/recordings?query=';
 
 
 
     async getBirdPhoto(birdName) {
-        const res = await fetch(`${this._apiPhotoBase}${birdName}`);
+        const res = await fetch(`${this._apiPhotoBase}${encodeURIComponent(birdName)}`);
 
         if (!res.ok) {
             throw new Error(`Could not fetch ${birdName} photo :(` +
@@ -31,7 +31,7 @@ export default class APIServices {
                 break;
             }
             let result = new TextDecoder("utf-8").decode(value);
-            console.log(JSON.parse(result))
+
             return JSON.parse(result)
         }
     };

@@ -19,6 +19,7 @@ export default class BirdDetails extends Component {
         if ((prevProps.selectedBirdId !== this.props.selectedBirdId) && (this.props.selectedBirdId !== null)) {
             this.birdPhoto(this.props.birdList[this.props.selectedBirdId - 1].species)
             this.birdSong(this.props.birdList[this.props.selectedBirdId - 1].species)
+            this.props.setDisableButtons(true);
             this.setState({
                 displayLoader: 'block',
                 displayContent: 'none'
@@ -52,22 +53,27 @@ export default class BirdDetails extends Component {
         this.services
             .getBirdSong(name)
             .then((response) => {
-                console.log(response)
-                if (response.numRecordings === '0'){
+                let contents = JSON.parse(response.contents);
+                console.log(contents)
+                if (contents.numRecordings === '0') {
                     this.setState({
                         song: this.props.birdList[this.props.selectedBirdId - 1].audio
                     })
                 } else {
+                    let songRandomIndex =  Math.floor(Math.random() * (contents.numRecordings - 1))
+                    console.log('SETSONG : ' + songRandomIndex)
+                    console.log(contents.recordings[songRandomIndex])
                     this.setState({
-                        song: 'https:' + response.recordings[0].file
+                        song: 'https:' + contents.recordings[songRandomIndex].file
                     })
                 }
-            }).then(() =>
+            }).then(() => {
+            this.props.setDisableButtons(false);
             this.setState({
                 displayLoader: 'none',
                 displayContent: ''
             })
-        )
+        })
     }
 
 
@@ -79,7 +85,6 @@ export default class BirdDetails extends Component {
         const {birdList, selectedBirdId} = this.props
         const {photo} = this.state
         let className = this.props.selectedBirdId === null ? 'bird-details-img-hide' : 'bird-details-img'
-        console.log(this.state.song)
         const audioPlayer = <AudioPlayer
             autoPlay={false}
             autoPlayAfterSrcChange={false}
@@ -91,7 +96,7 @@ export default class BirdDetails extends Component {
         return (
             <div className='container card bird-details'>
                 <div style={{display: this.state.displayLoader}} className="loader">Loading...</div>
-                <div style={{display: this.state.displayContent}}>
+                <div style={selectedBirdId !== null ? {display: this.state.displayContent} : {display : 'none'}}>
                     <div className='row player-titles'>
                         <img src={photo} alt="bird" className={className}/>
                         <div className='col'>

@@ -8,11 +8,13 @@ export default class Item extends Component{
 
     render() {
 
-        const {id, secretId, name, onItemSelected, selected } = this.props
+        const {id, secretId, name, onItemSelected, selected, disableElement} = this.props
 
-        const className = selected === true ?
+        let className = selected === true ?
             (secretId === id ? 'list-group-item success' : 'list-group-item error')
             : 'list-group-item'
+
+        disableElement === true ? className += ' disabled-item-list' : className += ''
 
         return(
             <li className={className}
